@@ -52,7 +52,7 @@ namespace UITest_the_internet.herokuapp.com
 
             //Assert that check box is NOT checked
             Assert.False(isSlelected);
-            Thread.Sleep(3000);
+            Task.Delay(3000).Wait();
         }
     }
 }

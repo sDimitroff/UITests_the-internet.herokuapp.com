@@ -1,33 +1,28 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeleniumExtras.WaitHelpers;
-using OpenQA.Selenium.Support.UI;
-using System.Xml.Linq;
-using System.IO; // we need this namespace for working with  directories and files, a reference needs to be added for this
-using System.IO.Compression;// we need this namespace for working with zip files , a reference needs to be added for this
-using System.Threading.Tasks;//we need this namespace to create a logical delay in time
 
 namespace UITest_the_internet.herokuapp.com
 {
-    public class FileDownload 
+    public class JQueryUIMenus 
     
     {
         [Test]
-        public void FileDownloadTest()
+        public void JQueryUIMenusTest()
         {
-
-           
+            string expectedFilePath = @"C:\Users\UserPC\Downloads\menu.pdf";
             
-            string expectedFilePath = @"C:\Users\UserPC\Documents\sample-zip-file.zip";
             bool fileExists = false;
-             
+
+
             ChromeOptions options = new ChromeOptions();
-            options.AddUserProfilePreference("download.default_directory", @"C:\Users\UserPC\Documents\");
+            options.AddUserProfilePreference("download.default_directory", @"C:\Users\UserPC\Downloads\");
             options.AddUserProfilePreference("disable-popup-blocking", "true");
 
             WebDriver driver = new ChromeDriver(options);
@@ -35,22 +30,35 @@ namespace UITest_the_internet.herokuapp.com
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.Url = "https://the-internet.herokuapp.com/";
 
-            var fileDownloadLink = driver.FindElement(By.LinkText("File Download"));
-            fileDownloadLink.Click();
 
-            var fileToBeDownloaded = driver.FindElement(By.LinkText("sample-zip-file.zip"));
-            fileToBeDownloaded.Click();
+
+            driver.FindElement(By.LinkText("JQuery UI Menus")).Click();
+
+            var enabledButton = driver.FindElement(By.LinkText("Enabled"));
+
+            enabledButton.Click();
+            Task.Delay(1000).Wait();
+            var downloadButton = driver.FindElement(By.LinkText("Downloads"));
+            downloadButton.Click();
+
+            Task.Delay(2000).Wait();
+            
+
+            var pdfButton = driver.FindElement(By.LinkText("PDF"));
+            pdfButton.Click();
+            
+
 
             //Wait until the file is downloaded, otherwise driver.quit is executed before it is full downoaded and  it is actualy downloaded as ".tmp"
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until<bool>(x => fileExists = File.Exists(expectedFilePath));
 
-            //Delete file after it is downloaded
 
+            //Delete file after it is downloaded
             bool result = File.Exists(expectedFilePath);
             if (result == true)
             {
-                File.Delete(expectedFilePath);  
+                File.Delete(expectedFilePath);
             }
 
             else
@@ -59,8 +67,16 @@ namespace UITest_the_internet.herokuapp.com
             }
 
 
+           
+          
+          
 
             driver.Quit();
+
+
+
+
+
         }
 
 

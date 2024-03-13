@@ -49,6 +49,7 @@ namespace UITest_the_internet.herokuapp.com
 
         }
 
+        [Test]
         public void IFrames()
         {
             var frameLink = driver.FindElement(By.LinkText("Frames"));
@@ -56,6 +57,15 @@ namespace UITest_the_internet.herokuapp.com
 
             var iFrameLink = driver.FindElement(By.LinkText("iFrame"));
             iFrameLink.Click();
+
+            driver.SwitchTo().Frame("mce_0_ifr");
+
+            var textField = driver.FindElement(By.CssSelector("#tinymce > p"));
+            textField.Clear();
+            Assert.That(textField.Text, Is.EqualTo(string.Empty));
+            textField.SendKeys("I can handle IFrames");
+            driver.SwitchTo().DefaultContent();
+            Task.Delay(2000).Wait();
 
 
         }

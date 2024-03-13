@@ -43,12 +43,12 @@ namespace UITest_the_internet.herokuapp.com
             Assert.That(contactMenuButton1.Location.Y, Is.Not.EqualTo(contactMenuButton2.Location.Y));
 
 
-            // 
+            
            // Standard Output is: 
            //{ X = 777,Y = 37}
            //{ X = 777,Y = 949}
            //{ X = 777,Y = 1899}
-           //The location of element is different each time, but it says its equal and the test fails
+           //The location of element is different each time, but it says its equal and the test fails. Maybe it's a bug in Selenium web driver
 
 
             

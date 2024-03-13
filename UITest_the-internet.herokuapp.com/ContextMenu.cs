@@ -37,7 +37,7 @@ namespace UITest_the_internet.herokuapp.com
             IAlert alert = driver.SwitchTo().Alert();
             alert.Accept();
 
-            Thread.Sleep(3000);
+            Task.Delay(2000);
           
         
 
